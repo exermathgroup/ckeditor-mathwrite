@@ -1,0 +1,2 @@
+# CKEditor MathWrite Plugin
+

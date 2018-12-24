@@ -1,0 +1,8 @@
+.DS_Store
+*~
+*.iws
+*.sublime-workspace
+*.sublime-project
+.cache
+node_modules
+package-lock.json
