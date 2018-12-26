@@ -6,11 +6,11 @@
  *
  */
 
-var editNode = false;
-var iframeWindow = null;
-var xmlExpr = null;
-var widgetFocused = null;
-CKEDITOR.dialog.add( 'mathwriteDialog', function( editor ) {
+CKEDITOR.dialog.add( 'mathwrite', function( editor ) {
+	var editNode = false;
+	var iframeWindow = null;
+	var xmlExpr = null;
+	var widgetFocused = null;
 	return {
 		// Basic properties of the dialog window: title, minimum size.
 		title: 'MathWrite dialog',
@@ -33,21 +33,20 @@ CKEDITOR.dialog.add( 'mathwriteDialog', function( editor ) {
     	            	   	iframeWindow = iframe.contentWindow;
     	            	   	if (xmlExpr)
     	            	   		iframeWindow.myGuppy.engine.set_content(atob(xmlExpr));
-    	            	   	console.log(CKEDITOR.plugins.getPath(pluginName) + 'guppy/guppy.min.js');
-						}	                   	
+						}                  	
 	                },
 	            ]
 	        }
 	    ],
 
 	    onLoad: function() {
-	    	console.log('onLoad');
+	    	// console.log('onLoad');
 	    },
 
 
       	onShow: function() {
     	  // Detect if edit or new mode (if new create an empty element)
-	    	console.log('onShow');
+	    	// console.log('onShow');
 	    	widgetFocused = editor.widgets.focused;
 	    	if (widgetFocused && widgetFocused.name == 'mathwrite') {
 	    		//iframeWindow.myGuppy.engine.set_content(atob(actFocused.data.xml));
@@ -68,15 +67,8 @@ CKEDITOR.dialog.add( 'mathwriteDialog', function( editor ) {
 	        var latexExpr = iframeWindow.myGuppy.latex();
     	    xmlExpr = btoa(iframeWindow.myGuppy.xml());
 			if (editNode) {
-				console.log('YES');
 				widgetFocused.setData({math: '\\(' + latexExpr + '\\)', xml: xmlExpr});
-				/*widgetFocused.data.xml = xmlExpr;
-				widgetFocused.data.math = '\\(' + latexExpr + '\\)';*/
 			} else {
-
-				/*var element = CKEDITOR.dom.element.createFromHtml('<span class="mathwrite" data-xml="' + xmlExpr + '">\\(' + latexExpr + '\\)</span>');
-				ed.insertElement(element);*/
-				//MathJax.Hub.Queue(["Typeset",MathJax.Hub,"prova"]);
 				ed.insertHtml('<span class="mathwrite" data-xml="' + xmlExpr + '">\\(' + latexExpr + '\\)</span>','unfiltered_html');
 			}
 		}

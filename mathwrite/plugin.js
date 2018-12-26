@@ -19,6 +19,9 @@ CKEDITOR.plugins.add( 'mathwrite', {
 	// The plugin initialization logic goes inside this method.
 	init: function( editor ) {
 
+		// Register our dialog file -- this.path is the plugin folder path.
+		CKEDITOR.dialog.add( 'mathwrite', this.path + 'dialogs/mathwrite.js' );		
+
 		if ( !editor.config.mathJaxLib ) {
 			CKEDITOR.error( 'mathjax-no-config' );
 		}
@@ -27,9 +30,9 @@ CKEDITOR.plugins.add( 'mathwrite', {
 		    // Code defined before...
 		    inline: true,
 		    dialog: 'mathwrite',
-		    pathName: 'mathwrite',
+		    pathName: 'MathWrite',
 		    mask: true,
-		    //button: 'MathWrite widget',
+		    button: 'MathWrite widget',
 			allowedContent: 'span(!mathwrite)',
 
 		    styleToAllowedContentRules: function( style ) {
@@ -124,60 +127,13 @@ CKEDITOR.plugins.add( 'mathwrite', {
 		} );		
 
 		// Define an editor command that opens our dialog window.
-		editor.addCommand( 'mathwrite', new CKEDITOR.dialogCommand( 'mathwriteDialog' ) );
-		// editor.addCommand( 'mathwrite', new CKEDITOR.dialogCommand( 'mathwriteIframe' ) );
-
-		// Create a toolbar button that executes the above command.
-		editor.ui.addButton( 'mathwrite', {
-
-			// The text part of the button (if available) and the tooltip.
-			label: 'MathWrite plugin',
-
-			// The command to execute on click.
-			command: 'mathwrite',
-
-			// The button placement in the toolbar (toolbar group name).
-			toolbar: 'insert'
-		});
-
-		// Register our dialog file -- this.path is the plugin folder path.
-		CKEDITOR.dialog.add( 'mathwriteDialog', this.path + 'dialogs/mathwrite.js' );		
+		editor.addCommand( 'mathwrite', new CKEDITOR.dialogCommand( 'mathwrite' ) );
 
 		// Add MathJax script to page preview.
 		editor.on( 'contentPreview', function( evt ) {
 			evt.data.dataValue = evt.data.dataValue.replace(/<\/head>/,'<script src="' + CKEDITOR.getUrl( editor.config.mathJaxLib ) +
 				'"><\/script>' + '<\/head>');
 		} );
-
-		/*editor.on('instanceReady', function() {
-			CKEDITOR.scriptLoader.load( CKEDITOR.getUrl(editor.config.mathJaxLib), function( success ) {
-    			// Alerts true if the script has been properly loaded.
-    			// HTTP error 404 should return false.
-    			console.log(success);
-			} );
-		});*/
-
-		/*editor.on('instanceReady', 
-
-			function () {
-				CKEDITOR.config.extraAllowedContent = 'span(mathwrite)';
-				var head = document.getElementsByTagName("head")[0], script;
-				script = document.createElement("script");
-				script.type = "text/x-mathjax-config";
-				script[(window.opera ? "innerHTML" : "text")] =
-				"MathJax.Hub.Config({\n" +
-				"  tex2jax: { inlineMath: [['$','$'], ['\\\\(','\\\\)']] }\n" +
-				"});";
-				head.appendChild(script);
-				script = document.createElement("script");
-				script.type = "text/javascript";
-				script.src  = CKEDITOR.getUrl(editor.config.mathJaxLib);
-				head.appendChild(script);
-			}
-
-		);*/
-
-
 
 	}
 });
