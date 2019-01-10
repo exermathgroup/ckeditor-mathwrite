@@ -24,7 +24,8 @@ CKEDITOR.dialog.add( 'mathwrite', function( editor ) {
 	            elements: [
 	                {
 	                	type : 'iframe',
-	                   	src : CKEDITOR.plugins.getPath(pluginName) + 'dialogs/mathwrite.html',
+	                   	/*src : CKEDITOR.plugins.getPath(pluginName) + 'dialogs/mathwrite.html',*/
+	                   	srcdoc : '<!doctype html><html><head><link rel="stylesheet" href="../guppy/guppy-default.min.css"><style>body {font-family: Arial, Helvetica, sans-serif;font-size: 1em;}#div-guppy {width: 100%;}.flex-container {display: flex;align-items: center;padding: 0.4em 0.2em;}</style><script src="../guppy/guppy.min.js"></script><script>window.onload = function() {Guppy.init({"path": "../guppy/","symbols": "../guppy/sym/symbols.json"});	myGuppy = new Guppy("div-guppy");}</script></head><body><div class="flex-container">Insert/Edit the mathematical expression:</div><div class="flex-container"><div id="div-guppy"></div></div></body></html>',
 	                   	width : 600,
 	                   	height : 400,
 						onContentLoad : function() {
